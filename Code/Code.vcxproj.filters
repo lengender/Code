@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="完美世界\test2.cpp">
+    <ClCompile Include="完美世界\1.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
