@@ -1,34 +1,57 @@
 #include<iostream>
 #include<vector>
-#include<algorithm>
 using namespace std;
 
 int main(){
-	int N;
-	cin >> N;
-
-	vector<int> num(N, 0);
-	for (int i = 0; i < N; ++i){
+	int n;
+	cin >> n;
+	vector<int> num(n, 0);
+	for (int i = 0; i < n; ++i)
 		cin >> num[i];
-	}
 
-	sort(num.begin(), num.end());
-	int res = 0;
-	int count = 1;
-	for (int i = 1; i  < N; i++){
-		if (num[i] - num[i - 1] <= 10)
-			count++;
-		else{
-			if (count % 3 != 0)
-				res += (3 - (count % 3));
-			count = 1;
+	int len = 0;
+	int max_len = -1;
+	int start = -1, end = -1;
+	int i = 0;
+	int flag_up = 0, flag_down = 0;
+	while (i < n){
+		if (i == 0){
+			//len = 1;
+			//max_len = 1;
+			//start = 0;
+			//end = 0;
+			i++;
+			continue;
 		}
+
+		if (num[i] > num[i - 1]){
+			flag_up = 1;
+			if (flag_down){
+				if (len > max_len){
+					end = i - 1;
+					start = end - len;
+					max_len = len;
+				}
+				flag_down = 0;
+				flag_up = 0;
+				len = 1;
+			}
+			else{
+				len++;
+			}
+		}
+		else{
+			flag_down = 1;
+			len++;
+		}
+		i++;
 	}
 
-	if (count % 3 != 0)
-		res += (3 - (count % 3));
-
-	cout << res << endl;
+	if (flag_up && flag_down && len > max_len){
+		end = n - 1;
+		start = end - len;
+	}
+	cout << start << " " << end << endl;
 
 	return 0;
 }
